@@ -1,0 +1,30 @@
+<div class="h-full flex flex-col bg-white">
+  <nav class="flex-1 overflow-y-auto">
+    <div *ngFor="let item of menuItems; let i = index" class="border-b border-gray-200">
+      <!-- Menu items without submenu -->
+      <a *ngIf="!item.submenu" [routerLink]="item.route" class="sidebar-link">
+        <mat-icon class="sidebar-icon">{{item.icon}}</mat-icon>
+        <span>{{item.name}}</span>
+      </a>
+
+      <!-- Menu items with submenu -->
+      <div *ngIf="item.submenu">
+        <a (click)="toggleSubmenu(i)" class="sidebar-link cursor-pointer">
+          <mat-icon class="sidebar-icon">{{item.icon}}</mat-icon>
+          <span>{{item.name}}</span>
+          <mat-icon class="ml-auto transform transition-transform" [class.rotate-180]="expandedIndex === i">
+            expand_more
+          </mat-icon>
+        </a>
+
+        <div class="submenu" [class.expanded]="expandedIndex === i">
+          <a *ngFor="let subItem of item.submenu" 
+             [routerLink]="subItem.route"
+             class="sidebar-link pl-12 text-sm">
+            {{subItem.name}}
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>

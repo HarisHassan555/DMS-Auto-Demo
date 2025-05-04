@@ -1,0 +1,89 @@
+<!-- Main container -->
+<div class="p-6">
+  <!-- Header section with button and search -->
+  <div class="flex justify-between items-center mb-6">
+    <button (click)="openModal()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center">
+      <span class="material-icons mr-2">add</span>
+      Add Country
+    </button>
+    <div class="relative">
+      <input 
+        type="text" 
+        [(ngModel)]="searchText"
+        placeholder="Search countries..." 
+        class="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+      <span class="material-icons absolute left-3 top-2 text-gray-400">search</span>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="bg-white rounded-lg shadow overflow-hidden">
+    <table class="min-w-full">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Serial No.</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Country Name</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <tr *ngFor="let country of filteredCountries; let i = index">
+          <td class="px-6 py-4 whitespace-nowrap">{{country.id}}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{country.name}}</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span [class]="country.isActive ? 'text-green-600' : 'text-red-600'">
+              {{country.isActive ? 'Active' : 'Inactive'}}
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <button (click)="openModal(country, i)" class="text-blue-600 hover:text-blue-900">
+              <span class="material-icons">edit</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div *ngIf="showModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+    <div class="relative bg-white rounded-lg shadow-xl mx-auto p-6 w-96">
+      <h3 class="text-lg font-medium mb-4">{{isEditing ? 'Edit' : 'Add'}} Country</h3>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Country Name</label>
+          <input 
+            type="text" 
+            [(ngModel)]="newCountry.name"
+            class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter country name"
+          >
+        </div>
+        <div class="flex items-center">
+          <input 
+            type="checkbox" 
+            [(ngModel)]="newCountry.isActive"
+            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+          >
+          <label class="ml-2 block text-sm text-gray-900">Active</label>
+        </div>
+        <div class="flex justify-end space-x-3 mt-6">
+          <button 
+            (click)="showModal = false" 
+            class="px-4 py-2 border rounded-md hover:bg-gray-100"
+          >
+            Cancel
+          </button>
+          <button 
+            (click)="addCountry()" 
+            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          >
+            {{isEditing ? 'Update' : 'Submit'}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,51 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    @apply h-full m-0 font-sans;
+  }
+}
+
+@layer components {
+  .sidebar-link {
+    @apply flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors;
+  }
+
+  .sidebar-icon {
+    @apply mr-3 text-primary;
+  }
+
+  .submenu {
+    @apply h-0 overflow-hidden transition-all duration-300 ease-out bg-gray-50;
+  }
+
+  .submenu.expanded {
+    @apply h-auto;
+  }
+
+  .feature-card {
+    @apply p-6 rounded-lg shadow-md transition-transform duration-300 hover:-translate-y-1 bg-white;
+  }
+}
+
+/* Custom scrollbar for submenu */
+.submenu::-webkit-scrollbar {
+  width: 4px;
+}
+
+.submenu::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.submenu::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.submenu::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
