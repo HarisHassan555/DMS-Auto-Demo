@@ -9,9 +9,13 @@ import { filter } from 'rxjs/operators';
 })
 export class AppComponent {
   title = 'my-app';
-  showSidebar: boolean = true;
+  showSidebar: boolean = false;
 
   constructor(private router: Router) {
+    // Initialize sidebar visibility based on current URL
+    this.showSidebar = !window.location.pathname.includes('/login');
+
+    // Update sidebar visibility on route changes
     router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
