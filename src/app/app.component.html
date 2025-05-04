@@ -2,7 +2,7 @@
   <mat-sidenav *ngIf="showSidebar" mode="side" opened class="w-64 bg-white shadow-lg">
     <app-sidebar></app-sidebar>
   </mat-sidenav>
-  <mat-sidenav-content [ngClass]="{'ml-64': showSidebar}">
-<router-outlet></router-outlet>
+  <mat-sidenav-content [ngStyle]="{'margin-left': showSidebar ? '16rem' : '0'}" class="transition-all duration-300">
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

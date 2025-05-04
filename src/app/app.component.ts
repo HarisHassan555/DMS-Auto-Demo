@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -7,19 +7,21 @@ import { filter } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'my-app';
   showSidebar: boolean = false;
 
-  constructor(private router: Router) {
-    // Initialize sidebar visibility based on current URL
-    this.showSidebar = !window.location.pathname.includes('/login');
+  constructor(private router: Router) {}
 
-    // Update sidebar visibility on route changes
-    router.events.pipe(
+  ngOnInit() {
+    // Set initial sidebar state
+    this.showSidebar = !this.router.url.includes('/login') && localStorage.getItem('isLoggedIn') === 'true';
+
+    // Subscribe to route changes
+    this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      this.showSidebar = !event.url.includes('/login');
+      this.showSidebar = !event.url.includes('/login') && localStorage.getItem('isLoggedIn') === 'true';
     });
   }
 }
