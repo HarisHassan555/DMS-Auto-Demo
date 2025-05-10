@@ -5,6 +5,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+// Firebase Imports
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { environment } from '../environments/environment';
+
 // Material Imports
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -12,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 
+// Components
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
@@ -53,6 +59,10 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' }
 ];
+
+// Initialize Firebase
+const app = initializeApp(environment.firebase);
+const auth = getAuth(app);
 
 @NgModule({
   declarations: [

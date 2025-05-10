@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -7,12 +8,17 @@ import { Router } from '@angular/router';
 export class AuthGuard {
   constructor(private router: Router) {}
 
-  canActivate(): boolean {
-    if (localStorage.getItem('isLoggedIn') === 'true') {
-      return true;
-    }
-    
-    this.router.navigate(['/login']);
-    return false;
+  canActivate(): Promise<boolean> {
+    return new Promise((resolve) => {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          resolve(true);
+        } else {
+          this.router.navigate(['/login']);
+          resolve(false);
+        }
+      });
+    });
   }
 } 

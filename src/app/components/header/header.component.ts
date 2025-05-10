@@ -1,23 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
-  username: string = '';
+export class HeaderComponent {
+  username: string = localStorage.getItem('username') || '';
 
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService) {}
 
-  ngOnInit() {
-    this.username = localStorage.getItem('username') || '';
-  }
-
-  logout() {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('username');
-    this.router.navigate(['/login']);
+  async logout() {
+    try {
+      await this.authService.logout();
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   }
 } 
