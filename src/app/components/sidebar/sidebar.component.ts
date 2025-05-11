@@ -10,7 +10,7 @@ export class SidebarComponent {
     {
       name: 'Home',
       icon: 'home',
-      route: '/home'
+      route: '/'
     },
     {
       name: 'Sales',

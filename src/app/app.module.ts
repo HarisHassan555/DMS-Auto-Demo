@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { inject } from '@vercel/analytics';
 
 // Firebase Imports
 import { initializeApp } from 'firebase/app';
@@ -32,7 +33,7 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { 
-    path: 'home', 
+    path: '', 
     component: LandingPageComponent,
     canActivate: [AuthGuard]
   },
@@ -56,7 +57,6 @@ const routes: Routes = [
     component: CustomerCategoryComponent,
     canActivate: [AuthGuard]
   },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' }
 ];
 
@@ -91,4 +91,8 @@ const auth = getAuth(app);
   providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    inject(); // Initialize Vercel Analytics
+  }
+}

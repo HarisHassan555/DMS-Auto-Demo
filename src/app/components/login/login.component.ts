@@ -19,7 +19,7 @@ export class LoginComponent {
   ) {
     // Check if already logged in
     if (localStorage.getItem('isLoggedIn') === 'true') {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/']);
     }
   }
 

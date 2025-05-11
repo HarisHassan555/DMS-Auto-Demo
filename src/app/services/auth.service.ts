@@ -36,7 +36,7 @@ export class AuthService {
     try {
       const result = await signInWithEmailAndPassword(this.auth, email, password);
       if (result.user) {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       }
     } catch (error) {
       throw error;
@@ -56,7 +56,7 @@ export class AuthService {
     try {
       const result = await createUserWithEmailAndPassword(this.auth, email, password);
       if (result.user) {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       }
     } catch (error) {
       throw error;
